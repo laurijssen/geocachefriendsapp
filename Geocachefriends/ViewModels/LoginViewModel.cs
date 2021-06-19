@@ -10,6 +10,9 @@ namespace Geocachefriends.ViewModels
         public Action DisplayInvalidLoginPrompt;
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         private string email;
+
+        public string Token{ get; set; }
+
         public string Email
         {
             get { return email; }
@@ -38,14 +41,11 @@ namespace Geocachefriends.ViewModels
         {
             RestService c = new RestService(Email, Password);
 
-            string token = await c.GetTokenAsync();
+            Token = await c.GetTokenAsync();
 
-            if (token == string.Empty)
+            if (Token == string.Empty)
             {
                 DisplayInvalidLoginPrompt();
-            }
-            else
-            {
             }
         }
     }

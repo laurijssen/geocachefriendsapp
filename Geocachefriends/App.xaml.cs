@@ -6,11 +6,18 @@ namespace Geocachefriends
 {
     public partial class App : Application
     {
+        public static INavigation GlobalNavigation { get; private set; }
+
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new LoginPage();
+            var rootPage = new NavigationPage(new MainPage());
+
+            GlobalNavigation = rootPage.Navigation;
+
+            MainPage = rootPage;
         }
 
         protected override void OnStart()

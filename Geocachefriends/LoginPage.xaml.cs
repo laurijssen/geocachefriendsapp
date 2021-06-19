@@ -11,11 +11,13 @@ namespace Geocachefriends
 {
     public partial class LoginPage : ContentPage
     {
+        public LoginViewModel Model { get; set; }
+
         public LoginPage()
         {
-            var vm = new LoginViewModel();
-            this.BindingContext = vm;
-            vm.DisplayInvalidLoginPrompt += () => DisplayAlert("Error", "Invalid Login, try again", "OK");
+            Model = new LoginViewModel();
+            BindingContext = Model;
+            Model.DisplayInvalidLoginPrompt += () => DisplayAlert("Error", "Invalid Login, try again", "OK");
 
             InitializeComponent();
 
@@ -26,7 +28,7 @@ namespace Geocachefriends
 
             Password.Completed += (object sender, EventArgs e) =>
             {
-                vm.SubmitCommand.Execute(null);
+                Model.SubmitCommand.Execute(null);
             };
         }
     }

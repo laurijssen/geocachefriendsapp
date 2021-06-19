@@ -4,9 +4,14 @@
              x:Class="Geocachefriends.MainPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label
+                Text="Geocachefriends" />
+            <Button
+                Text="Login"
+                Clicked="LoginButtonClicked"/>
+            <Button
+                Text="Play Geocachefriends" 
+                Clicked="PlayButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
