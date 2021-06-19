@@ -34,11 +34,18 @@ namespace Geocachefriends.ViewModels
         {
             SubmitCommand = new Command(OnSubmit);
         }
-        public void OnSubmit()
+        public async void OnSubmit()
         {
-            if (email != "macoratti@yahoo.com" || password != "secret")
+            RestService c = new RestService(Email, Password);
+
+            string token = await c.GetTokenAsync();
+
+            if (token == string.Empty)
             {
                 DisplayInvalidLoginPrompt();
+            }
+            else
+            {
             }
         }
     }
