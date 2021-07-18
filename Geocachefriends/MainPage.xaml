@@ -8,10 +8,12 @@
                 Text="Geocachefriends" />
             <Button
                 Text="Login"
-                Clicked="LoginButtonClicked"/>
+                Clicked="LoginButtonClicked"
+                Background="#229CF3"/>
             <Button
                 Text="Play Geocachefriends" 
-                Clicked="PlayButtonClicked"/>
+                Clicked="PlayButtonClicked"
+                Background="#229CF3"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

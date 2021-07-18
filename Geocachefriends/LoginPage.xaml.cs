@@ -11,14 +11,9 @@ namespace Geocachefriends
 {
     public partial class LoginPage : ContentPage
     {
-        public LoginViewModel Model { get; set; }
-
+        public string Token { get; set; }
         public LoginPage()
-        {
-            Model = new LoginViewModel();
-            BindingContext = Model;
-            Model.DisplayInvalidLoginPrompt += () => DisplayAlert("Error", "Invalid Login, try again", "OK");
-
+        {            
             InitializeComponent();
 
             Email.Completed += (object sender, EventArgs e) =>
@@ -28,8 +23,25 @@ namespace Geocachefriends
 
             Password.Completed += (object sender, EventArgs e) =>
             {
-                Model.SubmitCommand.Execute(null);
+                OnLoginClicked(sender, e);
             };
+        }
+
+        public async void OnLoginClicked(object sender, EventArgs e)
+        {
+            if (Email.Text == null || Password.Text == null)
+            {
+                await DisplayAlert("Error", "Invalid password / user", "OK");
+                return;
+            }
+            Email.Text = Email.Text.Trim();
+            Password.Text = Password.Text.Trim();
+
+            RestService c = new RestService(Email.Text, Password.Text);
+
+            Token = await c.GetTokenAsync();
+
+            await Navigation.PopModalAsync();
         }
     }
 }

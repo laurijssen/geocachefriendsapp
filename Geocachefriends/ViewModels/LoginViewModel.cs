@@ -39,14 +39,6 @@ namespace Geocachefriends.ViewModels
         }
         public async void OnSubmit()
         {
-            RestService c = new RestService(Email, Password);
-
-            Token = await c.GetTokenAsync();
-
-            if (Token == string.Empty)
-            {
-                DisplayInvalidLoginPrompt();
-            }
         }
     }
 }

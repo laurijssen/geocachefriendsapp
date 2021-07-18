@@ -14,6 +14,8 @@ namespace Geocachefriends
     {
         private LoginPage Login { get; set; } = new LoginPage();
 
+        private PlayPage Play { get; set; } = new PlayPage();
+
         public MainPage()
         {
             InitializeComponent();
@@ -21,21 +23,28 @@ namespace Geocachefriends
 
         async void LoginButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(Login, true);
+            Play.Token = Login.Token = null;
+            await Navigation.PushModalAsync(Login, true);            
         }
 
         async void PlayButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(Login, true);
+            await Navigation.PushModalAsync(Login, true);
         }
 
-        protected override bool OnBackButtonPressed()
+        protected override async void OnAppearing()
         {
-            Task<bool> action = DisplayAlert("Quitter?", "Voulez-vous quitter l'application?", "Oui", "Non");
-            if (action.Result)
-                DisplayAlert("debugvalue", "TRUE", "ok");
+            if (Login.Token == null || !string.IsNullOrEmpty(Play.Token)) return;
 
-            return true;
+            if (Login.Token == string.Empty)
+            {
+                await DisplayAlert("Error", "Invalid Login, try again or register account", "OK");
+            }
+            else
+            {
+                Play.Token = Login.Token;
+                await Navigation.PushModalAsync(Play);
+            }
         }
     }
 }
