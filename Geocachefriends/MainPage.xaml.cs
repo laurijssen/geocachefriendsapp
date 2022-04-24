@@ -12,6 +12,7 @@ namespace Geocachefriends
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
+        private GeofriendsClient client { get; set; }
         private LoginPage Login { get; set; } = new LoginPage();
 
         private PlayPage Play { get; set; } = new PlayPage();
@@ -19,6 +20,11 @@ namespace Geocachefriends
         public MainPage()
         {
             InitializeComponent();
+
+            client = new GeofriendsClient();
+
+            Play.Client = client;
+            Login.Client = client;
         }
 
         async void LoginButtonClicked(object sender, EventArgs e)

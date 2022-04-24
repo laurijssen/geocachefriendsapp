@@ -5,14 +5,20 @@
              x:Class="Geocachefriends.PlayPage">
     <ContentPage.Content>
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="9*" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Text="Logged in!"
+            <Image Grid.Row="0" Grid.Column="0" />
+            <Label Grid.Row="0" Grid.Column="1" Text="Logged in!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <maps:Map Grid.Row="1" MapType="Street"  x:Name="map" />
+            <maps:Map Grid.Row="1" Grid.ColumnSpan="3" MapType="Street"  x:Name="map" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

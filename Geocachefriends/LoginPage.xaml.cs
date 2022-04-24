@@ -12,6 +12,9 @@ namespace Geocachefriends
     public partial class LoginPage : ContentPage
     {
         public string Token { get; set; }
+
+        public GeofriendsClient Client { get; set; }
+
         public LoginPage()
         {            
             InitializeComponent();
@@ -37,9 +40,7 @@ namespace Geocachefriends
             Email.Text = Email.Text.Trim();
             Password.Text = Password.Text.Trim();
 
-            RestService c = new RestService(Email.Text, Password.Text);
-
-            Token = await c.GetTokenAsync();
+            Token = await Client.GetTokenAsync(Email.Text, Password.Text);
 
             await Navigation.PopModalAsync();
         }

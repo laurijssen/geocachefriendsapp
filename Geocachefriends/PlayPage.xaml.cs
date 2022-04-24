@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -14,14 +10,25 @@ namespace Geocachefriends
     public partial class PlayPage : ContentPage
     {
         public string Token { get; set; }
+
+        public GeofriendsClient Client { get; set; }
+
+        public Location lastLocation { get; set; }
         public PlayPage()
         {
             InitializeComponent();
             init();
+
+            Appearing += OnAppear;
         }
 
         protected override void OnDisappearing()
         {
+        }
+
+        private async void OnAppear(object sender, EventArgs e)
+        {
+            await Client.GetUser();
         }
 
         private async void updateLocation()
@@ -31,13 +38,16 @@ namespace Geocachefriends
                 var request = new GeolocationRequest(GeolocationAccuracy.Medium);
                 var loc = await Geolocation.GetLocationAsync(request);
 
-                if (loc != null)
+                if (loc != null && (loc != lastLocation))
                 {
+                    lastLocation = loc;
+
                     Position position = new Position(loc.Latitude, loc.Longitude);
 
-                    map.MoveToRegion(new MapSpan(position, 0.05, 0.05));
+                    var span = new MapSpan(position, 0.05, 0.05);
+
+                    map.MoveToRegion(span);
                     map.IsShowingUser = true;
-                    map.IsVisible = true;
                 }
             }
             catch (FeatureNotSupportedException fnsEx)
@@ -52,7 +62,7 @@ namespace Geocachefriends
 
         private void init()
         {
-            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
                 updateLocation();
                 return true;
